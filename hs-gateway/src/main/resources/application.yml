@@ -1,0 +1,29 @@
+server:
+  port: 10010
+spring:
+  application:
+    name: api-gateway
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+    registry-fetch-interval-seconds: 5
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+zuul:
+  prefix: /api #添加路由前端
+  routes:
+    item-service: /item/**
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000 # 熔断超时
+ribbon:
+  connetTimeout: 1000 # ribbon 链接超时
+  readTimeout: 5000 # ribbon 读取超时
+  MaxAutoRetries: 0 # 当服务器充实次数
+  MaxAutoRetriesNextService: 0 # 切换服务器重试次数

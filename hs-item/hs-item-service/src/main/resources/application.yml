@@ -1,0 +1,17 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: item-service
+  datasource:
+    url: jdbc:mysql://172.31.200.117:3306/oop_manager?useUnicode=yes&characterEncoding=UTF8&useSSL=false
+    username: root
+    password: zxw123
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
