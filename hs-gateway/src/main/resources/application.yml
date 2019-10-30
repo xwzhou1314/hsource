@@ -15,6 +15,12 @@ zuul:
   prefix: /api #添加路由前端
   routes:
     item-service: /item/**
+    upload-service:
+      path: /upload/**
+      serviceId: upload-service
+      strip-prefix: false
+  sensitive-headers:
+  add-host-header: true
 hystrix:
   command:
     default:

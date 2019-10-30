@@ -4,10 +4,9 @@ spring:
   application:
     name: item-service
   datasource:
-    url: jdbc:mysql://172.31.200.117:3306/oop_manager?useUnicode=yes&characterEncoding=UTF8&useSSL=false
+    url: jdbc:mysql://localhost:3306/hs?useUnicode=yes&characterEncoding=UTF8&useSSL=false
     username: root
     password: zxw123
-
 eureka:
   client:
     service-url:

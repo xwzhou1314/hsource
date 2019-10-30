@@ -13,6 +13,7 @@
         <module>hs-gateway</module>
         <module>hs-item</module>
         <module>hs-common</module>
+        <module>hs-upload</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -43,12 +44,6 @@
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <!-- mybatis启动器 -->
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${mybatis.starter.version}</version>
             </dependency>
             <!-- 通用Mapper启动器 -->
             <dependency>
