@@ -35,7 +35,8 @@ public class UploadServiceImpl implements UploadService {
             }
             // 1 保存图片
             // 1.1 生成保存目录
-            File dir = new File("E:\\upload");
+            // File dir = new File("E:\\upload");
+            File dir = new File("/home/upload/", file.getOriginalFilename());
             if (!dir.exists()) {
                 dir.mkdirs();
             }
