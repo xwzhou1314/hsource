@@ -14,3 +14,20 @@ eureka:
   instance:
     prefer-ip-address: true
     ip-address: 127.0.0.1
+fdfs:
+  so-timeout: 1501
+  connect-timeout: 601
+  thumb-image: # 缩略图
+    width: 60
+    height: 60
+  tracker-list: # tracker地址
+    - 192.168.135.123:22122
+
+hs:
+  upload:
+    baseUrl: http://image.hsource.com/
+    allowTypes:
+      - image/jpeg
+      - image/png
+      - image/bmp
+

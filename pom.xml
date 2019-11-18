@@ -30,7 +30,6 @@
         <mapper.starter.version>2.0.2</mapper.starter.version>
         <druid.starter.version>1.1.9</druid.starter.version>
         <mysql.version>5.1.32</mysql.version>
-        <pageHelper.starter.version>1.2.3</pageHelper.starter.version>
         <hsource.latest.version>1.0.0-SNAPSHOT</hsource.latest.version>
         <fastDFS.client.version>1.26.1-RELEASE</fastDFS.client.version>
     </properties>
@@ -45,18 +44,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- 通用Mapper启动器 -->
-            <dependency>
-                <groupId>tk.mybatis</groupId>
-                <artifactId>mapper-spring-boot-starter</artifactId>
-                <version>${mapper.starter.version}</version>
-            </dependency>
-            <!-- 分页助手启动器 -->
-            <dependency>
-                <groupId>com.github.pagehelper</groupId>
-                <artifactId>pagehelper-spring-boot-starter</artifactId>
-                <version>${pageHelper.starter.version}</version>
-            </dependency>
+
             <!-- mysql驱动 -->
             <dependency>
                 <groupId>mysql</groupId>
