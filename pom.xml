@@ -14,6 +14,7 @@
         <module>hs-item</module>
         <module>hs-common</module>
         <module>hs-upload</module>
+        <module>hs-search</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
