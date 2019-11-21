@@ -40,6 +40,16 @@ public class TbCategoryController {
         return ResponseEntity.ok(categoryList);
     }
 
+    /**
+     * 根据id查询商品分类
+     * @param ids
+     * @return
+     */
+    @GetMapping("list/ids")
+    public ResponseEntity<List<TbCategory>> queryCategoryByIds(@RequestParam(value = "ids") List<String> ids) {
+        List<TbCategory> categoryList = tbCategoryService.queryCategoryByIds(ids);
+        return ResponseEntity.ok(categoryList);
+    }
 
 }
 

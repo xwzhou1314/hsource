@@ -26,4 +26,9 @@ public class TbCategoryServiceImpl extends ServiceImpl<TbCategoryMapper, TbCateg
         wrapper.eq("parent_id", pid);
         return this.selectList(wrapper);
     }
+
+    @Override
+    public List<TbCategory> queryCategoryByIds(List<String> ids) {
+        return this.selectBatchIds(ids);
+    }
 }

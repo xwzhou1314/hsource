@@ -22,4 +22,11 @@ public interface TbCategoryService extends IService<TbCategory> {
      * @return
      */
     List<TbCategory> queryCategoryByPid(String pid);
+
+    /**
+     * 根据id查询商品分类
+     * @param ids
+     * @return
+     */
+    List<TbCategory> queryCategoryByIds(List<String> ids);
 }
