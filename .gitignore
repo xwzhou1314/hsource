@@ -23,22 +23,3 @@
 *.zip
 *.tar.gz
 *.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-hs-api-gateway/src/test/
-hs-common/src/main/resources/
-hs-common/src/test/
-hs-item/hs-item-interface/src/main/resources/
-hs-item/hs-item-interface/src/test/
-hs-item/hs-item-interface/target/
-hs-item/hs-item-service/target/generated-sources/
-hs-item/hs-item-service/target/generated-test-sources/
-hs-item/hs-item-service/target/test-classes/
-hs-registry/src/test/
-hs-upload/src/test/
-hs-user-service/hs-user-interface/src/main/resources/
-hs-user-service/hs-user-interface/src/test/
-hs-user-service/hs-user-serivce/src/test/
-hs-user-service/src/
-hs-search/src/main/com/hsource/search/pojo/Goods.class
