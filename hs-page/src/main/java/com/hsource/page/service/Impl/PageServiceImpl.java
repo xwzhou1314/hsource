@@ -32,6 +32,9 @@ public class PageServiceImpl implements PageService{
         // 输出流
         File file = new File("F:\\upload", id + ".html");
 
+        if(file.exists()){
+            file.delete();
+        }
 
         try {
             PrintWriter write = new PrintWriter(file, "UTF-8");

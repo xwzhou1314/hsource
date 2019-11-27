@@ -7,6 +7,19 @@ spring:
     url: jdbc:mysql://192.168.135.123:3307/hs?useUnicode=yes&characterEncoding=UTF8&useSSL=false
     username: root
     password: zxw123
+  rabbitmq:
+    host: 192.168.135.123
+    username: hsource
+    password: hsource
+    virtual-host: /hsource
+    template:
+      retry:
+        enabled: true
+        initial-interval: 10000ms
+        multiplier: 2
+        max-interval: 30000ms
+      exchange: hs.item.exchange
+    publisher-confirms: true
 eureka:
   client:
     service-url:

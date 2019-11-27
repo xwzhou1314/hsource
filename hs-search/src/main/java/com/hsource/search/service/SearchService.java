@@ -55,4 +55,11 @@ public class SearchService {
 
        return goods;
     }
+
+    public void createOrUpdateIndex(String id) {
+        // 构建 Goods
+        Goods goods = null;
+        // 存入索引库
+        repository.save(goods);
+    }
 }
