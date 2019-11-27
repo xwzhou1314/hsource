@@ -17,6 +17,7 @@
         <module>hs-search</module>
         <module>hs-page</module>
         <module>hs-sms</module>
+        <module>hs-user</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
