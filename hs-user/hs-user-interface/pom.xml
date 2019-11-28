@@ -13,9 +13,10 @@
     <artifactId>hs-user-interface</artifactId>
 
     <dependencies>
+
         <dependency>
-            <groupId>com.hsource.common</groupId>
-            <artifactId>hs-common</artifactId>
+            <groupId>com.hsource.parent</groupId>
+            <artifactId>hs-common-mybatiesplus</artifactId>
             <version>1.0.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

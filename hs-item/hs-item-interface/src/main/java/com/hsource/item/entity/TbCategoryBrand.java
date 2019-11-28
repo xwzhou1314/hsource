@@ -2,7 +2,6 @@ package com.hsource.item.entity;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.hsource.common.mybatiesplus.BaseEntity;
 import lombok.Data;

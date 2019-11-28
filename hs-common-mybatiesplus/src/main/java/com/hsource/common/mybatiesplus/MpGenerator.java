@@ -16,13 +16,13 @@ public class MpGenerator {
         String packageName = "com.hsource";
         //输出目录
         String outDir = "D://MpGenerator";
-        generateByTables(packageName, outDir, "tb_category_brand");
+        generateByTables(packageName, outDir, "tb_user");
         System.out.print("接口测试!");
     }
 
     private static void generateByTables(String packageName, String outDir, String... tableNames) {
         GlobalConfig config = new GlobalConfig();
-        String dbUrl = "jdbc:mysql://localhost:3306/hs";
+        String dbUrl = "jdbc:mysql://192.168.135.123:3307/hs";
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig.setDbType(DbType.MYSQL)
                 .setUrl(dbUrl)
