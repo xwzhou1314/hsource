@@ -24,6 +24,6 @@ public class TbCategoryBrandServiceImpl extends ServiceImpl<TbCategoryBrandMappe
 
     public void save(String id){
         // 发送mq消息
-        amqpTemplate.convertAndSend("item.update", id);
+        amqpTemplate.convertAndSend("hs.item.exchange","item.update", id);
     }
 }

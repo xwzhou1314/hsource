@@ -4,6 +4,7 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.hsource.sms.config.SmsProperties;
 import com.hsource.sms.utils.SmsUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
@@ -33,8 +34,7 @@ public class SmsListener {
 
     @RabbitListener(bindings = @QueueBinding(
             value = @Queue(value = "hsource.sms.queue", durable = "true"),
-            exchange = @Exchange(value = "hsource.sms.exchange",
-                    ignoreDeclarationExceptions = "true"),
+            exchange = @Exchange(value = "hsource.sms.exchange", type = ExchangeTypes.TOPIC),
             key = {"sms.verify.code"}))
     public void listenSms(Map<String, String> msg){
         if (msg == null || msg.size() <= 0) {

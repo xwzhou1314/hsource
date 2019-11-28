@@ -1,6 +1,7 @@
 package com.hsource.service;
 
 import com.baomidou.mybatisplus.service.IService;
+import com.hsource.dto.UserDTO;
 import com.hsource.entry.TbUser;
 
 /**
@@ -21,4 +22,21 @@ public interface TbUserService extends IService<TbUser> {
      * @return
      */
     Boolean checkData(String data, Integer type);
+
+    /**
+     * 注册
+     *
+     * @param userDTO
+     * @param code
+     */
+    void register(UserDTO userDTO, String code);
+
+    /**
+     * 根据用户名密码查询用户
+     *
+     * @param username
+     * @param password
+     * @return
+     */
+    UserDTO queryUsernameAndPassword(String username, String password);
 }
