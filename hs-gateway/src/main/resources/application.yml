@@ -17,6 +17,7 @@ zuul:
     item-service: /item/**
     search-service: /search/**
     user-service: /user/**
+    auth-service: /auth/** # 授权中心微服务
     upload-service:
       path: /upload/**
       serviceId: upload-service
@@ -35,3 +36,15 @@ ribbon:
   readTimeout: 5000 # ribbon 读取超时
   MaxAutoRetries: 0 # 当服务器充实次数
   MaxAutoRetriesNextService: 0 # 切换服务器重试次数
+hs:
+  jwt:
+    pubKeyPath: F:\\rsa\\rsa.pub # 公钥地址
+    cookieName: HS_TOKEN
+  filter:
+    allowPaths:
+      - /api/auth
+      - /api/search
+      - /api/user/register
+      - /api/user/check
+      - /api/user/code
+      - /api/item

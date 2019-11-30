@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TBCategoryDTO extends SplitPageDTO {
+public class TBCategoryQureyDTO extends SplitPageDTO {
 
     /**
      * 商品skuId

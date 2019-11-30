@@ -19,6 +19,7 @@
         <module>hs-sms</module>
         <module>hs-user</module>
         <module>hs-common-mybatiesplus</module>
+        <module>hs-auth</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

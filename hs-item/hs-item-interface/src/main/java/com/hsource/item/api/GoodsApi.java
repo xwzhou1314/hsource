@@ -1,4 +1,4 @@
-package com.hsource.api;
+package com.hsource.item.api;
 
 import com.hsource.item.entity.TbCategory;
 import org.springframework.web.bind.annotation.GetMapping;

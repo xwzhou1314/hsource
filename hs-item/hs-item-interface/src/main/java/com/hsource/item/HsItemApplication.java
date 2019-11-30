@@ -1,4 +1,4 @@
-package com.hsource;
+package com.hsource.item;
 
 public class HsItemApplication {
 }

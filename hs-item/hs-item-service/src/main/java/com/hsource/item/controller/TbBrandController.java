@@ -2,14 +2,12 @@ package com.hsource.item.controller;
 
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.hsource.item.dto.TBCategoryDTO;
+import com.hsource.item.dto.TBCategoryQureyDTO;
 import com.hsource.item.entity.TbBrand;
 import com.hsource.item.service.TbBrandService;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -37,7 +35,7 @@ public class TbBrandController {
      */
     @GetMapping("page")
     public ResponseEntity<Page<TbBrand>> queryBrandByPage(@RequestParam(value = "key", required = false) String key, HttpServletResponse httpServletResponse) {
-        TBCategoryDTO dto = new TBCategoryDTO();
+        TBCategoryQureyDTO dto = new TBCategoryQureyDTO();
         dto.setKey(key);
         return ResponseEntity.ok(tbBrandService.queryBrandByPage(dto));
     }

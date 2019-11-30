@@ -3,7 +3,6 @@ package com.hsource.controller;
 
 import com.hsource.dto.UserDTO;
 import com.hsource.service.TbUserService;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,6 @@ import javax.validation.Valid;
  * @since 2019-11-27
  */
 @RestController
-@Api(value = "TbUserController", tags = "用户")
 @RequestMapping("user")
 public class TbUserController {
 
@@ -39,10 +37,10 @@ public class TbUserController {
     }
 
     @PostMapping("register")
-    @ApiOperation(value = "检验数据")
+    @ApiOperation(value = "注册")
     public ResponseEntity<Void> register(
-            @ApiParam(value = "用户数据", required = true)@Valid UserDTO userDTO, @ApiParam(value = "验证码",
-            required = true)String code
+            @ApiParam(value = "用户数据")@Valid @RequestBody UserDTO userDTO, @ApiParam(value = "验证码",
+            required = true)@RequestParam("code") String code
     ) {
         userService.register(userDTO, code);
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -52,7 +50,7 @@ public class TbUserController {
     @ApiOperation(value = "根据用户名密码查询用户")
     public ResponseEntity<UserDTO> queryUsernameAndPassword(
             @ApiParam(value = "用户名", required = true) @RequestParam("username") String username, @ApiParam(value = "密码",
-            required = true)@PathVariable("password") String password
+            required = true)@RequestParam("password") String password
     ) {
         return ResponseEntity.ok(userService.queryUsernameAndPassword(username, password));
     }

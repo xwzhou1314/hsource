@@ -2,7 +2,7 @@ package com.hsource.item.service;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
-import com.hsource.item.dto.TBCategoryDTO;
+import com.hsource.item.dto.TBCategoryQureyDTO;
 import com.hsource.item.entity.TbBrand;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface TbBrandService extends IService<TbBrand> {
 
-    Page<TbBrand> queryBrandByPage(TBCategoryDTO dto);
+    Page<TbBrand> queryBrandByPage(TBCategoryQureyDTO dto);
 
     void saveBrand(TbBrand brand, List<String> cid);
 }

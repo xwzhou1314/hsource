@@ -78,11 +78,11 @@ public class TbUserServiceImpl extends ServiceImpl<TbUserMapper, TbUser> impleme
          * BeanUtils是org.apache.commons.beanutils.BeanUtils，b拷贝到a
          */
         // 检验验证码
-        String cacheCode = redisTemplate.opsForValue().get(KEY_PREFIX + userDTO.getPhone());
-        if(! StringUtils.equals(code, cacheCode)){
-            // TODO 解决异常，异常不对
-            throw new HsException(ExceptionEnum.BRAND_SAVE_FAILED);
-        }
+        // String cacheCode = redisTemplate.opsForValue().get(KEY_PREFIX + userDTO.getPhone());
+//        if(! StringUtils.equals(code, cacheCode)){
+//            // TODO 解决异常，异常不对
+//            throw new HsException(ExceptionEnum.BRAND_SAVE_FAILED);
+//        }
         //
         TbUser user = new TbUser();
         BeanUtils.copyProperties(userDTO, user);
@@ -96,7 +96,18 @@ public class TbUserServiceImpl extends ServiceImpl<TbUserMapper, TbUser> impleme
 
     @Override
     public UserDTO queryUsernameAndPassword(String username, String password) {
-         this.selectCount(new EntityWrapper<TbUser>().eq("username", username).eq("password", password));
-        return null;
+        TbUser user = this.selectOne(new EntityWrapper<TbUser>().eq("username", username));
+        if(null == user){
+            // TODO 解决异常，异常不对，用户不存在
+            throw new HsException(ExceptionEnum.BRAND_SAVE_FAILED);
+        }
+        if(!StringUtils.equals(user.getPassword(), CodecUtils.md5Hex(user.getPassword() , user.getPhone()))){
+            // TODO 解决异常，异常不对,密码错误
+            throw new HsException(ExceptionEnum.BRAND_SAVE_FAILED);
+        }
+
+        UserDTO dto = new UserDTO();
+        BeanUtils.copyProperties(user, dto);
+        return dto;
     }
 }

@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.hsource.common.enums.ExceptionEnum;
 import com.hsource.common.exception.HsException;
 import com.hsource.common.utils.UuidUtil;
-import com.hsource.item.dto.TBCategoryDTO;
+import com.hsource.item.dto.TBCategoryQureyDTO;
 import com.hsource.item.entity.TbBrand;
 import com.hsource.item.entity.TbCategoryBrand;
 import com.hsource.item.mapper.TbBrandMapper;
@@ -34,7 +34,7 @@ public class TbBrandServiceImpl extends ServiceImpl<TbBrandMapper, TbBrand> impl
     private TbCategoryBrandService categoryBrandService;
 
     @Override
-    public Page<TbBrand> queryBrandByPage(TBCategoryDTO dto) {
+    public Page<TbBrand> queryBrandByPage(TBCategoryQureyDTO dto) {
 
         EntityWrapper<TbBrand> wrapper = new EntityWrapper<>();
         wrapper.like("name",dto.getKey())
