@@ -16,18 +16,18 @@ public class MpGenerator {
         String packageName = "com.hsource";
         //输出目录
         String outDir = "D://MpGenerator";
-        generateByTables(packageName, outDir, "tb_user");
+        generateByTables(packageName, outDir, "invitation");
         System.out.print("接口测试!");
     }
 
     private static void generateByTables(String packageName, String outDir, String... tableNames) {
         GlobalConfig config = new GlobalConfig();
-        String dbUrl = "jdbc:mysql://192.168.135.123:3307/hs";
+        String dbUrl = "jdbc:mysql://localhost:3306/hsource";
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig.setDbType(DbType.MYSQL)
                 .setUrl(dbUrl)
                 .setUsername("root")
-                .setPassword("zxw123")
+                .setPassword("123zxw")
                 .setDriverName("com.mysql.jdbc.Driver");
         StrategyConfig strategyConfig = new StrategyConfig();
         strategyConfig

@@ -28,7 +28,8 @@ public class AuthController {
 
 
     @PostMapping("login")
-    public ResponseEntity<Void> login(@RequestParam("username") String username, @RequestParam("password") String password,
+    public ResponseEntity<Void> login(@RequestParam(value = "username", required = false) String username,
+                                      @RequestParam(value = "password", required = false) String password,
                                       HttpServletResponse response, HttpServletRequest request){
         // 登录
         String token = authService.login(username, password);
@@ -41,7 +42,6 @@ public class AuthController {
     @GetMapping("verify")
     public ResponseEntity<UserInfo> verify(@CookieValue("HS_TOKEN") String token,
                                            HttpServletResponse response, HttpServletRequest request){
-
         try {
             UserInfo userInfo = JwtUtils.getUserInfo(jwtProperties.getPublicKey(), token);
             if(null == userInfo){

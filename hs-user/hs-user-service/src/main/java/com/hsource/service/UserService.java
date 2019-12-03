@@ -2,18 +2,17 @@ package com.hsource.service;
 
 import com.baomidou.mybatisplus.service.IService;
 import com.hsource.dto.UserDTO;
-import com.hsource.entry.TbUser;
+import com.hsource.entry.User;
 
 /**
  * <p>
- * 用户表 服务类
+ *  用户服务类
  * </p>
  *
  * @author xwzhou
- * @since 2019-11-27
+ * @since 2019-12-02
  */
-public interface TbUserService extends IService<TbUser> {
-
+public interface UserService extends IService<User> {
     /**
      * 检验数据
      *

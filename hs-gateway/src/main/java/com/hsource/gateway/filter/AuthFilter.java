@@ -67,7 +67,7 @@ public class AuthFilter extends ZuulFilter{
 
 
     @Override
-    public Object run() throws ZuulException {
+    public Object run() {
         // 获取上下文
         RequestContext ctx = RequestContext.getCurrentContext();
         // 获取request

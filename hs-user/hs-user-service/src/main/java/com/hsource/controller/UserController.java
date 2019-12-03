@@ -2,7 +2,7 @@ package com.hsource.controller;
 
 
 import com.hsource.dto.UserDTO;
-import com.hsource.service.TbUserService;
+import com.hsource.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,24 +14,24 @@ import javax.validation.Valid;
 
 /**
  * <p>
- * 用户表 前端控制器
+ *  用户前端控制器
  * </p>
  *
  * @author xwzhou
- * @since 2019-11-27
+ * @since 2019-12-02
  */
 @RestController
-@RequestMapping("user")
-public class TbUserController {
+@RequestMapping("/user")
+public class UserController {
 
     @Autowired
-    private TbUserService userService;
+    private UserService userService;
+
 
     @GetMapping("/check/{data}/{type}")
     @ApiOperation(value = "检验数据")
     public ResponseEntity<Boolean> checkData(
-            @ApiParam(value = "检验数据", required = true) @PathVariable("data") String data, @ApiParam(value = "检验数据类型",
-            required = true)@PathVariable("type") Integer type
+            @ApiParam(value = "检验数据", required = true) @PathVariable("data") String data, @ApiParam(value = "检验数据类型", required = true)@PathVariable("type") Integer type
     ) {
         return ResponseEntity.ok(userService.checkData(data, type));
     }
@@ -46,16 +46,13 @@ public class TbUserController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/query")
+    @PostMapping("/query")
     @ApiOperation(value = "根据用户名密码查询用户")
     public ResponseEntity<UserDTO> queryUsernameAndPassword(
-            @ApiParam(value = "用户名", required = true) @RequestParam("username") String username, @ApiParam(value = "密码",
-            required = true)@RequestParam("password") String password
+            @ApiParam(value = "用户名", required = true) @RequestParam(value = "username", required = false) String username, @ApiParam(value = "密码",
+            required = true)@RequestParam(value = "password", required = false) String password
     ) {
         return ResponseEntity.ok(userService.queryUsernameAndPassword(username, password));
     }
-
-
-
 }
 

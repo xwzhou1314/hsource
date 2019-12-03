@@ -7,9 +7,9 @@ import com.hsource.common.exception.HsException;
 import com.hsource.common.utils.NumberUtils;
 import com.hsource.common.utils.UuidUtil;
 import com.hsource.dto.UserDTO;
-import com.hsource.entry.TbUser;
-import com.hsource.mapper.TbUserMapper;
-import com.hsource.service.TbUserService;
+import com.hsource.entry.User;
+import com.hsource.mapper.UserMapper;
+import com.hsource.service.UserService;
 import com.hsource.utils.CodecUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -23,18 +23,17 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
- * 用户表 服务实现类
+ *  用户服务实现类
  * </p>
  *
  * @author xwzhou
- * @since 2019-11-27
+ * @since 2019-12-02
  */
 @Service
-public class TbUserServiceImpl extends ServiceImpl<TbUserMapper, TbUser> implements TbUserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
-
     /**
      * 缓存 中 验证码 key
      */
@@ -42,8 +41,7 @@ public class TbUserServiceImpl extends ServiceImpl<TbUserMapper, TbUser> impleme
 
     @Override
     public Boolean checkData(String data, Integer type) {
-
-        EntityWrapper<TbUser> wrapper = new EntityWrapper<>();
+        EntityWrapper<User> wrapper = new EntityWrapper<>();
         switch (type){
             case 1:
                 wrapper.eq("username", data);
@@ -84,7 +82,7 @@ public class TbUserServiceImpl extends ServiceImpl<TbUserMapper, TbUser> impleme
 //            throw new HsException(ExceptionEnum.BRAND_SAVE_FAILED);
 //        }
         //
-        TbUser user = new TbUser();
+        User user = new User();
         BeanUtils.copyProperties(userDTO, user);
         // 密码加密
         String passworld = CodecUtils.md5Hex(user.getPassword() , user.getPhone());
@@ -96,12 +94,12 @@ public class TbUserServiceImpl extends ServiceImpl<TbUserMapper, TbUser> impleme
 
     @Override
     public UserDTO queryUsernameAndPassword(String username, String password) {
-        TbUser user = this.selectOne(new EntityWrapper<TbUser>().eq("username", username));
+        User user = this.selectOne(new EntityWrapper<User>().eq("user_name", username));
         if(null == user){
             // TODO 解决异常，异常不对，用户不存在
             throw new HsException(ExceptionEnum.BRAND_SAVE_FAILED);
         }
-        if(!StringUtils.equals(user.getPassword(), CodecUtils.md5Hex(user.getPassword() , user.getPhone()))){
+        if(!StringUtils.equals(user.getPassword(), CodecUtils.md5Hex(password , user.getPhone()))){
             // TODO 解决异常，异常不对,密码错误
             throw new HsException(ExceptionEnum.BRAND_SAVE_FAILED);
         }
