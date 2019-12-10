@@ -78,7 +78,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 检验验证码
         // String cacheCode = redisTemplate.opsForValue().get(KEY_PREFIX + userDTO.getPhone());
 //        if(! StringUtils.equals(code, cacheCode)){
-//            // TODO 解决异常，异常不对
 //            throw new HsException(ExceptionEnum.BRAND_SAVE_FAILED);
 //        }
         //
@@ -96,16 +95,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public UserDTO queryUsernameAndPassword(String username, String password) {
         User user = this.selectOne(new EntityWrapper<User>().eq("user_name", username));
         if(null == user){
-            // TODO 解决异常，异常不对，用户不存在
-            throw new HsException(ExceptionEnum.BRAND_SAVE_FAILED);
+            throw new HsException(ExceptionEnum.USER_NULL);
         }
         if(!StringUtils.equals(user.getPassword(), CodecUtils.md5Hex(password , user.getPhone()))){
-            // TODO 解决异常，异常不对,密码错误
-            throw new HsException(ExceptionEnum.BRAND_SAVE_FAILED);
+            throw new HsException(ExceptionEnum.USER_PASS_FALSE);
         }
 
         UserDTO dto = new UserDTO();
         BeanUtils.copyProperties(user, dto);
         return dto;
+    }
+
+    /**
+     * 根据id 查找 用户是否存在
+     *
+     * @param id
+     * @return true 不存在
+     */
+    @Override
+    public Boolean selectUserById(String id) {
+        return 0 == this.selectCount(new EntityWrapper<User>().eq("id", id));
     }
 }

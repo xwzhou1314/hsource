@@ -54,5 +54,17 @@ public class UserController {
     ) {
         return ResponseEntity.ok(userService.queryUsernameAndPassword(username, password));
     }
+
+    /**
+     * 根据id 查找 用户是否存在
+     *
+     * @param id
+     * @return true 不存在
+     */
+    @PostMapping("/selectUserById")
+    @ApiOperation(value = "根据id 查找 用户是否存在")
+    public ResponseEntity<Boolean> selectUserById(@ApiParam(value = "用户 id" )@RequestParam(value = "id", required = false) String id){
+        return ResponseEntity.ok(userService.selectUserById(id));
+    }
 }
 

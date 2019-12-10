@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.hsource.common.mybatiesplus.BaseEntity;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * <p>
  * 帖子实体类
@@ -38,4 +40,10 @@ public class Invitation extends BaseEntity {
      */
     @TableField("attachment_url")
     private String attachmentUrl;
+
+    /**
+     * 帖子评论
+     */
+    @TableField(exist = false)
+    private List<Reply> replies;
 }

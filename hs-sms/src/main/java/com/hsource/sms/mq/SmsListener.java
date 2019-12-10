@@ -33,8 +33,8 @@ public class SmsListener {
      */
 
     @RabbitListener(bindings = @QueueBinding(
-            value = @Queue(value = "hsource.sms.queue", durable = "true"),
-            exchange = @Exchange(value = "hsource.sms.exchange", type = ExchangeTypes.TOPIC),
+            value = @Queue(value = "hs.sms.queue", durable = "true"),
+            exchange = @Exchange(value = "hs.sms.exchange", type = ExchangeTypes.TOPIC),
             key = {"sms.verify.code"}))
     public void listenSms(Map<String, String> msg){
         if (msg == null || msg.size() <= 0) {

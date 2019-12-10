@@ -38,4 +38,11 @@ public interface UserService extends IService<User> {
      * @return
      */
     UserDTO queryUsernameAndPassword(String username, String password);
+
+    /**
+     * 根据id 查找 用户是否存在
+     * @param id
+     * @return true 不存在
+     */
+    Boolean selectUserById(String id);
 }

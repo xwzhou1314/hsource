@@ -20,6 +20,10 @@ spring:
         max-interval: 30000ms
       exchange: hs.item.exchange
     publisher-confirms: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+      add-mappings: false
 eureka:
   client:
     service-url:

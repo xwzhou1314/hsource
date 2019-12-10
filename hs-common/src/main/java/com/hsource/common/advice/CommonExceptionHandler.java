@@ -2,7 +2,6 @@ package com.hsource.common.advice;
 
 import com.hsource.common.exception.HsException;
 import com.hsource.common.vo.ExceptionResult;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

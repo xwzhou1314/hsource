@@ -15,13 +15,13 @@ import java.util.Set;
 public class Goods {
 
         @Id
-        private Long id;  //SpuId
+        private Long id;
 
         @Field(type = FieldType.Text, analyzer = "ik_max_word")
-        private String all;  //所有需要被搜索的信息，包括品牌，分类，标题
+        private String all;
 
         @Field(type = FieldType.Keyword, index = false)
-        private String subtitle;  //父标题
+        private String subtitle;
 
         private Long brandId;
         private Long cid1;
@@ -29,11 +29,11 @@ public class Goods {
         private Long cid3;
 
         private Date createTime;
-        private Set<Double> price;  //是所有sku的价格集合。方便根据价格进行筛选过滤
+        private Set<Double> price;
 
         @Field(type = FieldType.Keyword, index = false)
-        private String skus;  //sku信息的json结构数据
-        private Map<String, Object> specs;  //可搜索的规格参数，key是参数名，值是参数值
+        private String skus;
+        private Map<String, Object> specs;
 
 
 
