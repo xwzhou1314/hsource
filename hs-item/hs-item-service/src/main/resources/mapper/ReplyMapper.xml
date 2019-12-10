@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hsource.item.mapper.ReplyMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hsource.item.entity.Reply">
+        <id column="id" property="id" />
+        <result column="invitation_id" property="invitationId" />
+        <result column="user_id" property="userId" />
+        <result column="text" property="text" />
+        <result column="last_id" property="lastId" />
+        <result column="operate_date" property="operateDate" />
+        <result column="operate_user" property="operateUser" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id AS id, invitation_id AS invitationId, user_id AS userId, text AS text, last_id AS lastId, operate_date AS operateDate, operate_user AS operateUser, remark AS remark
+    </sql>
+
+</mapper>
