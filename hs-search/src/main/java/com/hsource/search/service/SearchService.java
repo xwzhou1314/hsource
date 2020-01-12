@@ -1,15 +1,12 @@
 package com.hsource.search.service;
 
-import com.hsource.search.pojo.Goods;
-import com.hsource.search.repository.GoodsRepository;
+import com.hsource.search.pojo.Invitations;
+import com.hsource.search.repository.InvitationsRepository;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
@@ -19,13 +16,13 @@ public class SearchService {
 
 
     @Autowired
-    private GoodsRepository repository;
+    private InvitationsRepository repository;
 
 
     @Autowired
     private ElasticsearchTemplate template;
 
-    public Page<Goods> search(){
+    public Page<Invitations> search(){
 
         //创建查询构造器
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
@@ -48,18 +45,18 @@ public class SearchService {
 //        String categoryAggName = "category_agg";
 //        queryBuilder.addAggregation(AggregationBuilders.terms(categoryAggName).field("cid3"));
 //        // 4. 过滤查询
-//        AggregatedPage<Goods> result = template.queryForPage(queryBuilder.build(), Goods.class);
+//        AggregatedPage<Invitations> result = template.queryForPage(queryBuilder.build(), Invitations.class);
 
         // 查询
-       Page<Goods> goods = repository.search(queryBuilder.build());
+       Page<Invitations> invitations = repository.search(queryBuilder.build());
 
-       return goods;
+       return invitations;
     }
 
     public void createOrUpdateIndex(String id) {
-        // 构建 Goods
-        Goods goods = null;
+        // 构建 invitations
+        Invitations invitations = null;
         // 存入索引库
-        repository.save(goods);
+        repository.save(invitations);
     }
 }
