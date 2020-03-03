@@ -5,16 +5,19 @@ import com.hsource.auth.config.JwtProperties;
 import com.hsource.auth.entity.UserInfo;
 import com.hsource.auth.service.AuthService;
 import com.hsource.auth.utils.JwtUtils;
+import com.hsource.common.enums.ExceptionEnum;
+import com.hsource.common.exception.HsException;
 import com.hsource.dto.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Slf4j
 @Service
 @EnableConfigurationProperties(JwtProperties.class)
-public class AuthServiceImpl implements AuthService{
+public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private UserClient userClient;
@@ -23,20 +26,19 @@ public class AuthServiceImpl implements AuthService{
     private JwtProperties jwtProperties;
 
     @Override
-    public String login(String username, String password){
-        // 校验用户名密码
-        UserDTO userDTO = userClient.queryUsernameAndPassword(username, password);
-        if(null == userDTO){
-            // TODO 抛出异常
-        }
-        // 生成token
+    public String login(String username, String password) {
+
         try {
-           String token = JwtUtils.generateToken(new UserInfo(userDTO.getId(), username), jwtProperties.getPrivateKey(), jwtProperties.getExpire());
-           return token;
+            // 校验用户名密码
+            UserDTO userDTO = userClient.queryUsernameAndPassword(username, password);
+            if (null == userDTO || StringUtils.isEmpty(userDTO.getId())) {
+                throw new HsException(ExceptionEnum.USER_PASS_FALSE);
+            }
+            // 生成token
+            String token = JwtUtils.generateToken(new UserInfo(userDTO.getId(), username), jwtProperties.getPrivateKey(), jwtProperties.getExpire());
+            return token;
         } catch (Exception e) {
-            log.error("生成token失败");
-            e.printStackTrace();
+            throw new HsException(ExceptionEnum.USER_PASS_FALSE);
         }
-        return null;
     }
 }

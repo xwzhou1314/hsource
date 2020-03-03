@@ -6,6 +6,7 @@ import com.hsource.auth.entity.UserInfo;
 import com.hsource.auth.service.AuthService;
 import com.hsource.auth.utils.JwtUtils;
 import com.hsource.common.utils.CookieUtils;
+import com.hsource.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpStatus;
@@ -28,11 +29,10 @@ public class AuthController {
 
 
     @PostMapping("login")
-    public ResponseEntity<Void> login(@RequestParam(value = "username", required = false) String username,
-                                      @RequestParam(value = "password", required = false) String password,
+    public ResponseEntity<Void> login(@RequestBody UserDTO dto,
                                       HttpServletResponse response, HttpServletRequest request){
         // 登录
-        String token = authService.login(username, password);
+        String token = authService.login(dto.getUsername(), dto.getPassword());
         // 写入 cookie
         CookieUtils.newBuilder(response).httpOnly().request(request)
                 .build(jwtProperties.getCookieName(), token);

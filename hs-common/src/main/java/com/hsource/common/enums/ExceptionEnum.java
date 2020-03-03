@@ -14,10 +14,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public enum ExceptionEnum {
     PRICE_CANNOT_BE_NULL(400,"价格部位空"),
-    USER_NULL(400, "不存在"),
+    USER_NULL(201, "不存在"),
     UPLOAD_FILE_ERROR(500, "上传文件失败"),
     INVALID_TYPE_ERROR(400, "文件类型不匹配"),
-    USER_PASS_FALSE(400, "用户账号或密码不正确"),
+    USER_PASS_FALSE(201, "用户账号或密码不正确"),
     DICT_NE_NULL(400, "数据字典为空"),
     INVITATION_NULL(400, "帖子为空"),
     REPLY_FALSE(500, "评论失败")
