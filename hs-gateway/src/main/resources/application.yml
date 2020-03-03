@@ -44,7 +44,7 @@ hs:
     allowPaths:
       - /api/auth
       - /api/search
-      - /api/user/register
-      - /api/user/check
-      - /api/user/code
+      - /api/user/user/register
+      - /api/user/user/check
+      - /api/user/user/code
       - /api/item

@@ -39,10 +39,9 @@ public class UserController {
     @PostMapping("register")
     @ApiOperation(value = "注册")
     public ResponseEntity<Void> register(
-            @ApiParam(value = "用户数据")@Valid @RequestBody UserDTO userDTO, @ApiParam(value = "验证码",
-            required = true)@RequestParam("code") String code
+            @ApiParam(value = "用户数据")@Valid @RequestBody UserDTO userDTO
     ) {
-        userService.register(userDTO, code);
+        userService.register(userDTO, userDTO.getCode());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

@@ -27,4 +27,9 @@ public class UserDTO implements Serializable{
      * id
      */
     private String id;
+
+    /**
+     * 验证码
+     */
+    private String  code;
 }
