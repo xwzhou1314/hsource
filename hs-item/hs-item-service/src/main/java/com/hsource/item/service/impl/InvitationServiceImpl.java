@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.hsource.common.enums.DelFlagEnum;
 import com.hsource.common.enums.ExceptionEnum;
 import com.hsource.common.exception.HsException;
+import com.hsource.item.dto.invitation.InvitationSearchDTO;
 import com.hsource.item.dto.reply.InsertReplyDTO;
 import com.hsource.item.entity.Invitation;
 import com.hsource.item.entity.Reply;
@@ -39,8 +40,8 @@ public class InvitationServiceImpl extends ServiceImpl<InvitationMapper, Invitat
      * @return
      */
     @Override
-    public List<Invitation> selectList() {
-        return this.selectList(new EntityWrapper<Invitation>().eq("del_falg", DelFlagEnum.DEL_FLAG_FALSE.getCode()));
+    public List<Invitation> selectListByDto(InvitationSearchDTO dto) {
+        return this.selectList(new EntityWrapper<Invitation>().eq("del_falg", DelFlagEnum.DEL_FLAG_FALSE.getCode()).like("",dto.getTitle()));
     }
 
     /**
@@ -58,6 +59,9 @@ public class InvitationServiceImpl extends ServiceImpl<InvitationMapper, Invitat
         }
         // 获取评论
         invitation.setReplies(replyService.selectReplyByInvitationId(id));
+        invitation.setReadNum(invitation.getReadNum() + 1);
+
+        this.updateById(invitation);
         return invitation;
     }
 
@@ -74,5 +78,34 @@ public class InvitationServiceImpl extends ServiceImpl<InvitationMapper, Invitat
             throw new HsException(ExceptionEnum.INVITATION_NULL);
         }
         replyService.replyUser(dto);
+    }
+
+    @Override
+    public void likeNum(String id) {
+        Invitation invitation = this.selectById(id);
+        if(null == invitation){
+            throw new HsException(ExceptionEnum.INVITATION_NULL);
+        }
+        long likeNum = invitation.getLikeNum() + 1;
+        invitation.setLikeNum(likeNum);
+        this.updateById(invitation);
+    }
+
+    @Override
+    public List<Invitation> selectListHot() {
+        List<Invitation> invitations = this.selectList(new EntityWrapper<Invitation>()
+                .eq("del_falg", DelFlagEnum.DEL_FLAG_FALSE.getCode())
+                .orderBy("like_num",false)
+                .last("LIMIT 5"));
+        return invitations;
+    }
+
+    @Override
+    public List<Invitation> selectSixList() {
+        List<Invitation> invitations = this.selectList(new EntityWrapper<Invitation>()
+                .eq("del_falg", DelFlagEnum.DEL_FLAG_FALSE.getCode())
+                .orderBy("create_date",false)
+                .last("LIMIT 6"));
+        return invitations;
     }
 }

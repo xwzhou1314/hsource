@@ -1,6 +1,7 @@
 package com.hsource.item.service;
 
 import com.baomidou.mybatisplus.service.IService;
+import com.hsource.item.dto.invitation.InvitationSearchDTO;
 import com.hsource.item.dto.reply.InsertReplyDTO;
 import com.hsource.item.entity.Invitation;
 
@@ -22,7 +23,7 @@ public interface InvitationService extends IService<Invitation> {
      *
      * @return
      */
-    List<Invitation> selectList();
+    List<Invitation> selectListByDto(InvitationSearchDTO dto);
 
     /**
      * 根据id查询帖子
@@ -37,4 +38,10 @@ public interface InvitationService extends IService<Invitation> {
      * @param dto
      */
     void replyUser(InsertReplyDTO dto);
+
+    void likeNum(String id);
+
+    List<Invitation> selectListHot();
+
+    List<Invitation> selectSixList();
 }

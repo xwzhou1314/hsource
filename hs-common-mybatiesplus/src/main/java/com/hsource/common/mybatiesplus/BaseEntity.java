@@ -31,6 +31,12 @@ public class BaseEntity extends Model implements Serializable {
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date operateDate;
+
+    /**
+     * 记录操作时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createDate;
     /**
      * 备注
      */

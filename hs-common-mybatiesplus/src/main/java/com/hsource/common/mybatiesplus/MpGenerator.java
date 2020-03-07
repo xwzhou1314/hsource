@@ -16,7 +16,7 @@ public class MpGenerator {
         String packageName = "com.hsource";
         //输出目录
         String outDir = "D://MpGenerator";
-        generateByTables(packageName, outDir, "reply");
+        generateByTables(packageName, outDir, "saying");
         System.out.print("接口测试!");
     }
 

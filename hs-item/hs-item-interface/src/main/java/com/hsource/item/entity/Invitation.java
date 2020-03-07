@@ -35,12 +35,29 @@ public class Invitation extends BaseEntity {
      */
     @TableField("del_falg")
     private String delFalg;
+
     /**
      * 图片或者视频路径
      */
     @TableField("attachment_url")
     private String attachmentUrl;
 
+    /**
+     * 阅读数
+     */
+    @TableField("read_num")
+    private long readNum;
+    /**
+     * 喜欢数
+     */
+    @TableField("like_num")
+    private long likeNum;
+
+    /**
+     * 内容
+     */
+    @TableField("content")
+    private String content;
     /**
      * 帖子评论
      */

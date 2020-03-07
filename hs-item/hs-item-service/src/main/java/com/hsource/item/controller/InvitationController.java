@@ -1,6 +1,7 @@
 package com.hsource.item.controller;
 
 
+import com.hsource.item.dto.invitation.InvitationSearchDTO;
 import com.hsource.item.dto.reply.InsertReplyDTO;
 import com.hsource.item.entity.Invitation;
 import com.hsource.item.service.InvitationService;
@@ -34,8 +35,20 @@ public class InvitationController {
 
     @ApiOperation(value = "获取全部帖子")
     @PostMapping("/selectList")
-    public ResponseEntity<List<Invitation>> selectList(){
-        return ResponseEntity.ok(invitationService.selectList());
+    public ResponseEntity<List<Invitation>> selectList(@ApiParam(value = "回复互动数据")@Valid @RequestBody InvitationSearchDTO dto){
+        return ResponseEntity.ok(invitationService.selectListByDto(dto));
+    }
+
+    @ApiOperation(value = "获取部分帖子")
+    @PostMapping("/selectSixList")
+    public ResponseEntity<List<Invitation>> selectSixList(){
+        return ResponseEntity.ok(invitationService.selectSixList());
+    }
+
+    @ApiOperation(value = "获取热门帖子")
+    @PostMapping("/selectListHot")
+    public ResponseEntity<List<Invitation>> selectListHot(){
+        return ResponseEntity.ok(invitationService.selectListHot());
     }
 
     /**
@@ -53,6 +66,13 @@ public class InvitationController {
     @PostMapping("replyUser")
     public ResponseEntity<Void> replyUser(@ApiParam(value = "回复互动数据")@Valid @RequestBody InsertReplyDTO dto){
         invitationService.replyUser(dto);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @ApiOperation(value = "点赞")
+    @PostMapping("likeNum")
+    public ResponseEntity<Void> likeNum(@RequestParam(value = "id") String id){
+        invitationService.likeNum(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
