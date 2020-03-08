@@ -1,12 +1,15 @@
 package com.hsource.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.hsource.common.enums.DelFlagEnum;
 import com.hsource.common.enums.ExceptionEnum;
 import com.hsource.common.exception.HsException;
 import com.hsource.common.utils.NumberUtils;
 import com.hsource.common.utils.UuidUtil;
 import com.hsource.dto.UserDTO;
+import com.hsource.dto.UserPageDTO;
 import com.hsource.entry.User;
 import com.hsource.mapper.UserMapper;
 import com.hsource.service.UserService;
@@ -115,5 +118,36 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public Boolean selectUserById(String id) {
         return 0 == this.selectCount(new EntityWrapper<User>().eq("id", id));
+    }
+
+    @Override
+    public Page<User> searchList(UserPageDTO dto) {
+
+        EntityWrapper<User> wrapper = new EntityWrapper<>();
+        if(null != dto && StringUtils.isNotBlank(dto.getSearch())){
+            wrapper.like("user_name", dto.getSearch())
+                    .or().like("nick_name", dto.getSearch());
+        }
+        Page<User> userPage = this.selectPage(new Page<>(dto.getPage(), dto.getPageSize()), wrapper);
+        userPage.getRecords().forEach(v->{
+            if(DelFlagEnum.DEL_FLAG_FALSE.getCode().equals(v.getDelFalg())){
+                v.setDelFalg(DelFlagEnum.DEL_FLAG_FALSE.getMsg());
+            }else {
+                v.setDelFalg(DelFlagEnum.DEL_FLAG_TRUE.getMsg());
+            }
+        });
+        return userPage;
+    }
+
+    @Override
+    public Void delUserById(UserPageDTO dto) {
+        User user = this.selectOne(new EntityWrapper<User>().eq("id", dto.getId())
+                .eq("del_falg", DelFlagEnum.DEL_FLAG_FALSE.getCode()));
+        if(null == user){
+            throw new HsException(ExceptionEnum.DEL_USER_NULL);
+        }
+        user.setDelFalg(DelFlagEnum.DEL_FLAG_TRUE.getCode());
+        this.updateById(user);
+        return null;
     }
 }

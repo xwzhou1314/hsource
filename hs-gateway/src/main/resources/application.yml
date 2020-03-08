@@ -47,4 +47,5 @@ hs:
       - /api/user/user/register
       - /api/user/user/check
       - /api/user/user/code
-      - /api/item
+      - /api/item/invitation
+      - /api/item/saying

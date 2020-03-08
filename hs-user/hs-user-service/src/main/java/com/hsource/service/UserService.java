@@ -2,7 +2,11 @@ package com.hsource.service;
 
 import com.baomidou.mybatisplus.service.IService;
 import com.hsource.dto.UserDTO;
+import com.hsource.dto.UserPageDTO;
 import com.hsource.entry.User;
+import com.baomidou.mybatisplus.plugins.Page;
+
+import java.util.List;
 
 /**
  * <p>
@@ -45,4 +49,8 @@ public interface UserService extends IService<User> {
      * @return true 不存在
      */
     Boolean selectUserById(String id);
+
+    Page<User> searchList(UserPageDTO dto);
+
+    Void delUserById(UserPageDTO dto);
 }

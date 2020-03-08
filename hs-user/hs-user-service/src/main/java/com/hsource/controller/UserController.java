@@ -2,15 +2,19 @@ package com.hsource.controller;
 
 
 import com.hsource.dto.UserDTO;
+import com.hsource.dto.UserPageDTO;
+import com.hsource.entry.User;
 import com.hsource.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.baomidou.mybatisplus.plugins.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * <p>
@@ -35,6 +39,20 @@ public class UserController {
     ) {
         return ResponseEntity.ok(userService.checkData(data, type));
     }
+
+    @PostMapping("searchList")
+    @ApiOperation(value = "用户号列表")
+    public ResponseEntity<Page<User>> searchList(@ApiParam(value = "用户数据")@RequestBody UserPageDTO dto) {
+        return ResponseEntity.ok(userService.searchList(dto));
+
+    }
+    @PostMapping("delUserById")
+    @ApiOperation(value = "用户号删除")
+    public ResponseEntity<Void> delUserById(@ApiParam(value = "用户数据")@RequestBody UserPageDTO dto) {
+        userService.delUserById(dto);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 
     @PostMapping("register")
     @ApiOperation(value = "注册")
