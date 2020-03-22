@@ -1,14 +1,13 @@
 package com.hsource.item.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hsource.common.enums.ExceptionEnum;
 import com.hsource.common.exception.HsException;
 import com.hsource.item.entity.Dict;
 import com.hsource.item.mapper.DictMapper;
 import com.hsource.item.service.DictService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,6 @@ import java.util.stream.Collectors;
  * @since 2019-12-02
  */
 @Service
-@Transactional
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
 
     /**
@@ -34,7 +32,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
      */
     @Override
     public Dict selectDictByCode(String code) {
-        Dict dict = this.selectOne(new EntityWrapper<Dict>().eq("code", code));
+        Dict dict = this.getOne(new QueryWrapper<Dict>().eq("code", code));
         HsException hs = new HsException(ExceptionEnum.DICT_NE_NULL);
         if(null == dict){
             throw new HsException(ExceptionEnum.DICT_NE_NULL);
@@ -50,7 +48,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
      */
     @Override
     public List<Dict> selectDictByParentCode(String code) {
-        return this.selectList(new EntityWrapper<Dict>().eq("parent_code", code));
+        return this.list(new QueryWrapper<Dict>().eq("parent_code", code));
     }
 
     /**
@@ -61,7 +59,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
      */
     @Override
     public Map<String, String> selectDictByKey(String code) {
-        return this.selectList(new EntityWrapper<Dict>().eq("parent_code", code))
+        return this.list(new QueryWrapper<Dict>().eq("parent_code", code))
                 .stream().collect(Collectors.toMap(Dict::getCode, Dict::getValue));
     }
 

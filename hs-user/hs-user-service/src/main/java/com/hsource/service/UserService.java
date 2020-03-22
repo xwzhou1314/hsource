@@ -1,12 +1,10 @@
 package com.hsource.service;
 
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.hsource.dto.UserDTO;
 import com.hsource.dto.UserPageDTO;
 import com.hsource.entry.User;
-import com.baomidou.mybatisplus.plugins.Page;
-
-import java.util.List;
 
 /**
  * <p>

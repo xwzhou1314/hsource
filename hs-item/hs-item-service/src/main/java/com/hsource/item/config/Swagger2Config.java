@@ -19,17 +19,14 @@ public class Swagger2Config {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.hsource.item"))
+                .apis(RequestHandlerSelectors.basePackage("com.hsource.item.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("快乐源泉管理工具Api")
-                .description("详细描述")
-                .termsOfServiceUrl("xwzhou")
-                .contact("xwzhou")
+                .title("hsource-item")
                 .version("1.0")
                 .build();
     }

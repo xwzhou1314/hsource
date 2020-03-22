@@ -1,22 +1,19 @@
 package com.hsource.item.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hsource.common.enums.DelFlagEnum;
 import com.hsource.common.enums.ExceptionEnum;
 import com.hsource.common.exception.HsException;
 import com.hsource.item.dto.invitation.InvitationSearchDTO;
 import com.hsource.item.dto.reply.InsertReplyDTO;
 import com.hsource.item.entity.Invitation;
-import com.hsource.item.entity.Reply;
 import com.hsource.item.mapper.InvitationMapper;
 import com.hsource.item.service.InvitationService;
 import com.hsource.item.service.ReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -28,7 +25,6 @@ import java.util.List;
  * @since 2019-12-02
  */
 @Service
-@Transactional
 public class InvitationServiceImpl extends ServiceImpl<InvitationMapper, Invitation> implements InvitationService {
 
     @Autowired
@@ -41,7 +37,7 @@ public class InvitationServiceImpl extends ServiceImpl<InvitationMapper, Invitat
      */
     @Override
     public List<Invitation> selectListByDto(InvitationSearchDTO dto) {
-        return this.selectList(new EntityWrapper<Invitation>().eq("del_falg", DelFlagEnum.DEL_FLAG_FALSE.getCode()).like("",dto.getTitle()));
+        return this.list(new QueryWrapper<Invitation>().eq("del_falg", DelFlagEnum.DEL_FLAG_FALSE.getCode()).like("title",dto.getTitle()));
     }
 
     /**
@@ -53,7 +49,7 @@ public class InvitationServiceImpl extends ServiceImpl<InvitationMapper, Invitat
     @Override
     public Invitation selectInvitationById(String id) {
         // 获取帖子
-        Invitation invitation = this.selectById(id);
+        Invitation invitation = this.getById(id);
         if(null == invitation){
             throw new HsException(ExceptionEnum.INVITATION_NULL);
         }
@@ -73,7 +69,7 @@ public class InvitationServiceImpl extends ServiceImpl<InvitationMapper, Invitat
     @Override
     public void replyUser( InsertReplyDTO dto) {
         // 查询帖子是否存在
-        Invitation invitation = this.selectById(dto.getInvitationId());
+        Invitation invitation = this.getById(dto.getInvitationId());
         if(null == invitation){
             throw new HsException(ExceptionEnum.INVITATION_NULL);
         }
@@ -82,7 +78,7 @@ public class InvitationServiceImpl extends ServiceImpl<InvitationMapper, Invitat
 
     @Override
     public void likeNum(String id) {
-        Invitation invitation = this.selectById(id);
+        Invitation invitation = this.getById(id);
         if(null == invitation){
             throw new HsException(ExceptionEnum.INVITATION_NULL);
         }
@@ -93,18 +89,18 @@ public class InvitationServiceImpl extends ServiceImpl<InvitationMapper, Invitat
 
     @Override
     public List<Invitation> selectListHot() {
-        List<Invitation> invitations = this.selectList(new EntityWrapper<Invitation>()
+        List<Invitation> invitations = this.list(new QueryWrapper<Invitation>()
                 .eq("del_falg", DelFlagEnum.DEL_FLAG_FALSE.getCode())
-                .orderBy("like_num",false)
+                .orderByDesc("like_num")
                 .last("LIMIT 5"));
         return invitations;
     }
 
     @Override
     public List<Invitation> selectSixList() {
-        List<Invitation> invitations = this.selectList(new EntityWrapper<Invitation>()
+        List<Invitation> invitations = this.list(new QueryWrapper<Invitation>()
                 .eq("del_falg", DelFlagEnum.DEL_FLAG_FALSE.getCode())
-                .orderBy("create_date",false)
+                .orderByDesc("create_date")
                 .last("LIMIT 6"));
         return invitations;
     }

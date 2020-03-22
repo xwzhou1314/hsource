@@ -5,7 +5,7 @@ import com.hsource.item.dto.invitation.InvitationSearchDTO;
 import com.hsource.item.dto.reply.InsertReplyDTO;
 import com.hsource.item.entity.Invitation;
 import com.hsource.item.service.InvitationService;
-import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import java.util.List;
  * @author xwzhou
  * @since 2019-12-02
  */
-@ApiModel(value = "帖子")
+@Api(tags = "帖子")
 @RestController
 @RequestMapping("/invitation")
 public class InvitationController {

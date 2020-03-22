@@ -1,7 +1,7 @@
 package com.hsource.item.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hsource.common.enums.DelFlagEnum;
 import com.hsource.item.entity.Saying;
 import com.hsource.item.mapper.SayingMapper;
@@ -23,9 +23,9 @@ public class SayingServiceImpl extends ServiceImpl<SayingMapper, Saying> impleme
 
     @Override
     public List<Saying> selectList() {
-        List<Saying> sayings = this.selectList(new EntityWrapper<Saying>()
+        List<Saying> sayings = this.list(new QueryWrapper<Saying>()
                 .eq("del_falg", DelFlagEnum.DEL_FLAG_FALSE.getCode())
-                .orderBy("sort")
+                .orderByAsc("sort")
                 .last("LIMIT 5"));
         return sayings;
     }

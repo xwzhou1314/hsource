@@ -1,8 +1,8 @@
 package com.hsource.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hsource.common.enums.DelFlagEnum;
 import com.hsource.common.enums.ExceptionEnum;
 import com.hsource.common.exception.HsException;
@@ -44,7 +44,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Boolean checkData(String data, Integer type) {
-        EntityWrapper<User> wrapper = new EntityWrapper<>();
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
         switch (type){
             case 1:
                 wrapper.eq("username", data);
@@ -53,7 +53,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 wrapper.eq("phone", data);
                 break;
         }
-        return 0 == this.selectCount(wrapper);
+        return 0 == this.count(wrapper);
     }
 
     private void sengCode(String phone){
@@ -91,12 +91,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setPassword(passworld);
         user.setId(UuidUtil.get32UUID());
         // 写入数据库
-        this.insert(user);
+        this.save(user);
     }
 
     @Override
     public UserDTO queryUsernameAndPassword(String username, String password) {
-        User user = this.selectOne(new EntityWrapper<User>().eq("user_name", username));
+        User user = this.getOne(new QueryWrapper<User>().eq("user_name", username));
         if(null == user){
             throw new HsException(ExceptionEnum.USER_NULL);
         }
@@ -117,18 +117,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public Boolean selectUserById(String id) {
-        return 0 == this.selectCount(new EntityWrapper<User>().eq("id", id));
+        return 0 == this.count(new QueryWrapper<User>().eq("id", id));
     }
 
     @Override
     public Page<User> searchList(UserPageDTO dto) {
 
-        EntityWrapper<User> wrapper = new EntityWrapper<>();
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
         if(null != dto && StringUtils.isNotBlank(dto.getSearch())){
             wrapper.like("user_name", dto.getSearch())
                     .or().like("nick_name", dto.getSearch());
         }
-        Page<User> userPage = this.selectPage(new Page<>(dto.getPage(), dto.getPageSize()), wrapper);
+        Page<User> userPage = this.page(new Page<>(dto.getPage(), dto.getPageSize()), wrapper);
         userPage.getRecords().forEach(v->{
             if(DelFlagEnum.DEL_FLAG_FALSE.getCode().equals(v.getDelFalg())){
                 v.setDelFalg(DelFlagEnum.DEL_FLAG_FALSE.getMsg());
@@ -141,7 +141,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Void delUserById(UserPageDTO dto) {
-        User user = this.selectOne(new EntityWrapper<User>().eq("id", dto.getId())
+        User user = this.getOne(new QueryWrapper<User>().eq("id", dto.getId())
                 .eq("del_falg", DelFlagEnum.DEL_FLAG_FALSE.getCode()));
         if(null == user){
             throw new HsException(ExceptionEnum.DEL_USER_NULL);

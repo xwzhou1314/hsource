@@ -1,9 +1,8 @@
 package com.hsource.item.mapper;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hsource.item.entity.Reply;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 /**
  * <p>
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Repository;
  * @since 2019-12-08
  */
 @Mapper
-@Repository
 public interface ReplyMapper extends BaseMapper<Reply> {
 
 }

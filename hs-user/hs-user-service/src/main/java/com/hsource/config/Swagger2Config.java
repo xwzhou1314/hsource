@@ -19,17 +19,16 @@ public class Swagger2Config {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.hsource"))
+                .apis(RequestHandlerSelectors.basePackage("com.hsource.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("快乐源泉管理工具Api")
-                .description("详细描述")
-                .termsOfServiceUrl("xwzhou")
-                .contact("xwzhou")
+                .title("springboot利用swagger构建api文档")
+                .description("简单优雅的restfun风格，http://blog.csdn.net/saytime")
+                .termsOfServiceUrl("http://blog.csdn.net/saytime")
                 .version("1.0")
                 .build();
     }

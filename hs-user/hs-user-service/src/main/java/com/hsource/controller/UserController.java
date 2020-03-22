@@ -1,6 +1,7 @@
 package com.hsource.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hsource.dto.UserDTO;
 import com.hsource.dto.UserPageDTO;
 import com.hsource.entry.User;
@@ -8,13 +9,11 @@ import com.hsource.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.baomidou.mybatisplus.plugins.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * <p>

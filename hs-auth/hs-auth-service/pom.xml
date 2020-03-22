@@ -38,6 +38,12 @@
             <groupId>com.hsource.service</groupId>
             <artifactId>hs-user-interface</artifactId>
             <version>1.0.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.hsource.parent</groupId>
+                    <artifactId>hs-common-mybatiesplus</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
