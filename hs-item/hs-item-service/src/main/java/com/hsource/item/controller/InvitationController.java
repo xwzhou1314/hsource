@@ -1,6 +1,8 @@
 package com.hsource.item.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hsource.item.dto.invitation.InvitationPageDTO;
 import com.hsource.item.dto.invitation.InvitationSearchDTO;
 import com.hsource.item.dto.reply.InsertReplyDTO;
 import com.hsource.item.entity.Invitation;
@@ -32,6 +34,20 @@ public class InvitationController {
     @Autowired
     private InvitationService invitationService;
 
+
+    @PostMapping("/searchListPage")
+    @ApiOperation(value = "用户号列表")
+    public ResponseEntity<Page<Invitation>> searchListPage(@ApiParam(value = "数据")@RequestBody InvitationPageDTO dto) {
+        return ResponseEntity.ok(invitationService.searchListPage(dto));
+
+    }
+
+    @PostMapping("/deleteById")
+    @ApiOperation(value = "删除")
+    public ResponseEntity<Void> deleteById(@ApiParam(value = "数据")@RequestBody InvitationPageDTO dto) {
+        return ResponseEntity.ok(invitationService.deleteById(dto));
+
+    }
 
     @ApiOperation(value = "获取全部帖子")
     @PostMapping("/selectList")

@@ -1,16 +1,19 @@
 package com.hsource.item.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hsource.common.enums.DelFlagEnum;
 import com.hsource.common.enums.ExceptionEnum;
 import com.hsource.common.exception.HsException;
+import com.hsource.item.dto.invitation.InvitationPageDTO;
 import com.hsource.item.dto.invitation.InvitationSearchDTO;
 import com.hsource.item.dto.reply.InsertReplyDTO;
 import com.hsource.item.entity.Invitation;
 import com.hsource.item.mapper.InvitationMapper;
 import com.hsource.item.service.InvitationService;
 import com.hsource.item.service.ReplyService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -103,5 +106,33 @@ public class InvitationServiceImpl extends ServiceImpl<InvitationMapper, Invitat
                 .orderByDesc("create_date")
                 .last("LIMIT 6"));
         return invitations;
+    }
+    @Override
+    public Page<Invitation> searchListPage(InvitationPageDTO dto) {
+        QueryWrapper<Invitation> wrapper = new QueryWrapper<>();
+        if(null != dto && StringUtils.isNotBlank(dto.getTitle())){
+            wrapper.like("title", dto.getTitle());
+        }
+        Page<Invitation> userPage = this.page(new Page<>(dto.getPage(), dto.getPageSize()), wrapper);
+        return userPage;
+    }
+
+    /**
+     * 删除
+     *
+     * @param dto
+     * @return
+     */
+    @Override
+    public Void deleteById(InvitationPageDTO dto) {
+        Invitation byId = this.getOne(new QueryWrapper<Invitation>()
+                .eq("del_falg", DelFlagEnum.DEL_FLAG_FALSE.getCode())
+                .eq("id", dto.getId()));
+        if(null == byId){
+            throw new HsException(ExceptionEnum.DEL_USER_NULL);
+        }
+        byId.setDelFalg(DelFlagEnum.DEL_FLAG_TRUE.getCode());
+        this.saveOrUpdate(byId);
+        return null;
     }
 }

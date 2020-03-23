@@ -1,6 +1,8 @@
 package com.hsource.item.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hsource.item.dto.saying.SayingPageDTO;
 import com.hsource.item.entity.Saying;
 
 import java.util.List;
@@ -16,4 +18,8 @@ import java.util.List;
 public interface SayingService extends IService<Saying> {
 
     List<Saying> selectList();
+
+    Page<Saying> selectPageList(SayingPageDTO dto);
+
+    Void deleteById(SayingPageDTO dto);
 }

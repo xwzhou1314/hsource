@@ -1,6 +1,8 @@
 package com.hsource.item.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hsource.item.dto.invitation.InvitationPageDTO;
 import com.hsource.item.dto.invitation.InvitationSearchDTO;
 import com.hsource.item.dto.reply.InsertReplyDTO;
 import com.hsource.item.entity.Invitation;
@@ -26,6 +28,7 @@ public interface InvitationService extends IService<Invitation> {
 
     /**
      * 根据id查询帖子
+     *
      * @param id
      * @return
      */
@@ -38,9 +41,39 @@ public interface InvitationService extends IService<Invitation> {
      */
     void replyUser(InsertReplyDTO dto);
 
+    /**
+     * 点赞人数
+     *
+     * @param id
+     */
     void likeNum(String id);
 
+    /**
+     * 热门帖子
+     *
+     * @return
+     */
     List<Invitation> selectListHot();
 
+    /**
+     * 前六个帖子
+     *
+     * @return
+     */
     List<Invitation> selectSixList();
+
+    /**
+     * 分页获取帖子
+     *
+     * @param dto
+     * @return
+     */
+    Page<Invitation> searchListPage(InvitationPageDTO dto);
+
+    /**
+     * 删除
+     * @param dto
+     * @return
+     */
+    Void deleteById(InvitationPageDTO dto);
 }

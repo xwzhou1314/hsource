@@ -42,5 +42,5 @@ public class Saying extends BaseEntity{
      * 是否删除 0保留 1 删除
      */
     @TableField("del_falg")
-    private long delFalg;
+    private String delFalg;
 }
