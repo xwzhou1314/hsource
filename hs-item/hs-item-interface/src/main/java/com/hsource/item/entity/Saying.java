@@ -1,9 +1,12 @@
 package com.hsource.item.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.hsource.common.mybatiesplus.BaseEntity;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -15,7 +18,7 @@ import lombok.Data;
  */
 @Data
 @TableName("saying")
-public class Saying extends BaseEntity{
+public class Saying extends BaseEntity implements Serializable{
 
     private static final long serialVersionUID = 1L;
 

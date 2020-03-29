@@ -1,5 +1,6 @@
 package com.hsource.common.mybatiesplus;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -20,7 +21,7 @@ public class BaseEntity extends Model implements Serializable {
     /**
      * 唯一id
      */
-    @TableId
+    @TableId(value = "id",type = IdType.INPUT)
     private String id;
     /**
      * 记录操作人

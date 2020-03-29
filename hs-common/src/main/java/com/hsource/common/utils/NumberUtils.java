@@ -77,4 +77,13 @@ public class NumberUtils {
         int num = new Random().nextInt(Double.valueOf(Math.pow(10, len + 1)).intValue() - 1) + min;
         return String.valueOf(num).substring(0,len);
     }
+
+    /**
+     * 随机生成验证码
+     *
+     * @return
+     */
+    public static String createCode() {
+        return String.valueOf((int)((Math.random()*9+1)*1000));
+    }
 }

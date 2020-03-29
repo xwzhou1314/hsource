@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hsource.common.enums.DelFlagEnum;
 import com.hsource.common.enums.ExceptionEnum;
 import com.hsource.common.exception.HsException;
+import com.hsource.item.dto.invitation.InvitationDTO;
 import com.hsource.item.dto.invitation.InvitationPageDTO;
 import com.hsource.item.dto.invitation.InvitationSearchDTO;
 import com.hsource.item.dto.reply.InsertReplyDTO;
@@ -14,6 +15,7 @@ import com.hsource.item.mapper.InvitationMapper;
 import com.hsource.item.service.InvitationService;
 import com.hsource.item.service.ReplyService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -134,5 +136,20 @@ public class InvitationServiceImpl extends ServiceImpl<InvitationMapper, Invitat
         byId.setDelFalg(DelFlagEnum.DEL_FLAG_TRUE.getCode());
         this.saveOrUpdate(byId);
         return null;
+    }
+
+    /**
+     * 新增OR修改
+     *
+     * @param dto
+     */
+    @Override
+    public void insertOrUpdate(InvitationDTO dto) {
+        Invitation invitation = new Invitation();
+        BeanUtils.copyProperties(dto, invitation);
+        if(StringUtils.isNotBlank(dto.getId())){
+            invitation.setDelFalg(DelFlagEnum.DEL_FLAG_FALSE.getCode());
+        }
+        this.saveOrUpdate(invitation);
     }
 }

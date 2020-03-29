@@ -1,5 +1,7 @@
 package com.hsource;
 
+import com.alicp.jetcache.anno.config.EnableCreateCacheAnnotation;
+import com.alicp.jetcache.anno.config.EnableMethodCache;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -9,7 +11,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 
-
+@EnableMethodCache(basePackages = "com.hsource")
+@EnableCreateCacheAnnotation
 @SpringBootApplication
 @EnableDiscoveryClient
 public class HsUserApplication extends SpringBootServletInitializer {

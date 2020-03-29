@@ -2,6 +2,7 @@ package com.hsource.item.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hsource.item.dto.invitation.InvitationDTO;
 import com.hsource.item.dto.invitation.InvitationPageDTO;
 import com.hsource.item.dto.invitation.InvitationSearchDTO;
 import com.hsource.item.dto.reply.InsertReplyDTO;
@@ -72,8 +73,16 @@ public interface InvitationService extends IService<Invitation> {
 
     /**
      * 删除
+     *
      * @param dto
      * @return
      */
     Void deleteById(InvitationPageDTO dto);
+
+    /**
+     * 新增OR修改
+     *
+     * @param dto
+     */
+    void insertOrUpdate(InvitationDTO dto);
 }

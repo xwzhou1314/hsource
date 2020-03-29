@@ -49,7 +49,7 @@ public class UserController {
     @ApiOperation(value = "用户号删除")
     public ResponseEntity<Void> delUserById(@ApiParam(value = "用户数据")@RequestBody UserPageDTO dto) {
         userService.delUserById(dto);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 

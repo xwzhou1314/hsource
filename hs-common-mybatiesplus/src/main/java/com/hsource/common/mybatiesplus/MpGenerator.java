@@ -52,14 +52,15 @@ public class MpGenerator {
         gc.setOpen(false);
         // gc.setSwagger2(true); 实体属性 Swagger2 注解
         mpg.setGlobalConfig(gc);
-
+        gc.setBaseColumnList(true);
+        gc.setBaseResultMap(true);
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/tt?useUnicode=true&useSSL=false&characterEncoding=utf8");
+        dsc.setUrl("jdbc:mysql://rm-bp19rj3x6f3gw6389ao.mysql.rds.aliyuncs.com:3306/gusteau-live?useUnicode=true&characterEncoding=UTF-8&failOverReadOnly=false&autoReconnect=true&serverTimezone=Asia/Shanghai");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("123zxw");
+        dsc.setUsername("xcydba");
+        dsc.setPassword("Xcy_dba_2017");
         mpg.setDataSource(dsc);
 
         // 包配置

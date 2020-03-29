@@ -1,6 +1,18 @@
 server:
   port: 8086
 spring:
+  redis:
+      database: 0
+      host: localhost
+      port: 6379
+      password:     # 密码（默认为空
+      timeout: 6000ms  # 连接超时时长（毫秒）
+      jedis:
+        pool:
+          max-active: 1000  # 连接池最大连接数（使用负值表示没有限制）
+          max-wait: -1ms      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-idle: 10      # 连接池中的最大空闲连接
+          min-idle: 5       # 连接池中的最小空闲连接
   application:
     name: user-service
   datasource:
@@ -14,6 +26,26 @@ eureka:
   instance:
     prefer-ip-address: true
     ip-address: 127.0.0.1
+jetcache:
+  statIntervalMinutes: 15
+  areaInCacheName: false
+  local:
+    default:
+      type: linkedhashmap
+      keyConvertor: fastjson
+      limit: 100
+  remote:
+    default:
+      type: redis
+      keyConvertor: fastjson
+      valueEncoder: java
+      valueDecoder: java
+      poolConfig:
+        minIdle: 5
+        maxIdle: 20
+        maxTotal: 50
+      host: ${spring.redis.host}
+      port: ${spring.redis.port}
 mybatis-plus:
   #外部化xml配置
   #config-location: classpath:mybatis-config.xml

@@ -1,7 +1,11 @@
 package com.hsource.item.controller;
 
 
+import com.alicp.jetcache.anno.CacheRefresh;
+import com.alicp.jetcache.anno.CacheType;
+import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hsource.item.dto.invitation.InvitationDTO;
 import com.hsource.item.dto.invitation.InvitationPageDTO;
 import com.hsource.item.dto.invitation.InvitationSearchDTO;
 import com.hsource.item.dto.reply.InsertReplyDTO;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -34,9 +39,15 @@ public class InvitationController {
     @Autowired
     private InvitationService invitationService;
 
+    @ApiOperation(value = "新增OR修改")
+    @PostMapping("/insertOrUpdate")
+    public ResponseEntity<Void> insertOrUpdate(@ApiParam(value = "数据") @RequestBody InvitationDTO dto) {
+        invitationService.insertOrUpdate(dto);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
     @PostMapping("/searchListPage")
-    @ApiOperation(value = "用户号列表")
+    @ApiOperation(value = "帖子列表")
     public ResponseEntity<Page<Invitation>> searchListPage(@ApiParam(value = "数据")@RequestBody InvitationPageDTO dto) {
         return ResponseEntity.ok(invitationService.searchListPage(dto));
 
@@ -51,6 +62,9 @@ public class InvitationController {
 
     @ApiOperation(value = "获取全部帖子")
     @PostMapping("/selectList")
+    @RequestMapping(value = "/index", method = RequestMethod.POST)
+    @Cached(expire = 60, cacheType = CacheType.REMOTE)
+    @CacheRefresh(refresh = 300, stopRefreshAfterLastAccess = 3600, timeUnit = TimeUnit.SECONDS)
     public ResponseEntity<List<Invitation>> selectList(@ApiParam(value = "回复互动数据")@Valid @RequestBody InvitationSearchDTO dto){
         return ResponseEntity.ok(invitationService.selectListByDto(dto));
     }
