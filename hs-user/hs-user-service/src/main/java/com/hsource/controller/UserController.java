@@ -51,6 +51,12 @@ public class UserController {
         userService.delUserById(dto);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+    @PostMapping("keepById")
+    @ApiOperation(value = "用户号删除")
+    public ResponseEntity<Void> keepById(@ApiParam(value = "用户数据")@RequestBody UserPageDTO dto) {
+        userService.keepById(dto);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
 
     @PostMapping("register")

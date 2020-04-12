@@ -16,4 +16,7 @@ public class UserPageDTO extends SplitPageDTO {
 
     @ApiModelProperty("id")
     private String id;
+
+    @ApiModelProperty("id")
+    private Integer type;
 }

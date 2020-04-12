@@ -51,4 +51,6 @@ public interface UserService extends IService<User> {
     Page<User> searchList(UserPageDTO dto);
 
     Void delUserById(UserPageDTO dto);
+
+    void keepById(UserPageDTO dto);
 }

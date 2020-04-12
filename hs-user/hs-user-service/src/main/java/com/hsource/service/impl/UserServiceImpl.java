@@ -128,6 +128,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             wrapper.like("user_name", dto.getSearch())
                     .or().like("nick_name", dto.getSearch());
         }
+
+        if(0 == dto.getType()){
+            wrapper.eq("del_falg", DelFlagEnum.DEL_FLAG_FALSE.getCode());
+        }else {
+            wrapper.eq("del_falg", DelFlagEnum.DEL_FLAG_TRUE.getCode());
+        }
+
+
         Page<User> userPage = this.page(new Page<>(dto.getPage(), dto.getPageSize()), wrapper);
         userPage.getRecords().forEach(v->{
             if(DelFlagEnum.DEL_FLAG_FALSE.getCode().equals(v.getDelFalg())){
@@ -149,5 +157,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setDelFalg(DelFlagEnum.DEL_FLAG_TRUE.getCode());
         this.updateById(user);
         return null;
+    }
+
+    @Override
+    public void keepById(UserPageDTO dto) {
+        User user = this.getOne(new QueryWrapper<User>().eq("id", dto.getId())
+                .eq("del_falg", DelFlagEnum.DEL_FLAG_TRUE.getCode()));
+        if(null == user){
+            throw new HsException(ExceptionEnum.DEL_USER_NULL);
+        }
+        user.setDelFalg(DelFlagEnum.DEL_FLAG_FALSE.getCode());
+        this.updateById(user);
     }
 }

@@ -22,6 +22,8 @@ zuul:
       path: /upload/**
       serviceId: upload-service
       strip-prefix: false
+  ignored-services:
+    - upload-service # 忽略upload-service服务
   sensitive-headers:
   add-host-header: true
 hystrix:

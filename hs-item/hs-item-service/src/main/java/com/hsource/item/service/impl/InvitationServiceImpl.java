@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hsource.common.enums.DelFlagEnum;
 import com.hsource.common.enums.ExceptionEnum;
 import com.hsource.common.exception.HsException;
+import com.hsource.common.utils.UuidUtil;
+import com.hsource.item.constant.RedisConstant;
 import com.hsource.item.dto.invitation.InvitationDTO;
 import com.hsource.item.dto.invitation.InvitationPageDTO;
 import com.hsource.item.dto.invitation.InvitationSearchDTO;
@@ -17,9 +19,14 @@ import com.hsource.item.service.ReplyService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -34,6 +41,9 @@ public class InvitationServiceImpl extends ServiceImpl<InvitationMapper, Invitat
 
     @Autowired
     private ReplyService replyService;
+
+    @Resource
+    RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 获取全部帖子
@@ -83,13 +93,18 @@ public class InvitationServiceImpl extends ServiceImpl<InvitationMapper, Invitat
 
     @Override
     public void likeNum(String id) {
-        Invitation invitation = this.getById(id);
-        if(null == invitation){
-            throw new HsException(ExceptionEnum.INVITATION_NULL);
+
+        String key = RedisConstant.LIKE_NUMBER_INVITATION;
+        Integer redisSum = (Integer) redisTemplate.opsForHash().get(key,id);
+        if(redisSum == null){
+            Invitation invitation = this.getById(id);
+            if(null == invitation){
+                throw new HsException(ExceptionEnum.INVITATION_NULL);
+            }
+            redisSum = invitation.getLikeNum();
         }
-        long likeNum = invitation.getLikeNum() + 1;
-        invitation.setLikeNum(likeNum);
-        this.updateById(invitation);
+        redisSum ++;
+        redisTemplate.opsForHash().put(key, id, redisSum);
     }
 
     @Override
@@ -116,6 +131,13 @@ public class InvitationServiceImpl extends ServiceImpl<InvitationMapper, Invitat
             wrapper.like("title", dto.getTitle());
         }
         Page<Invitation> userPage = this.page(new Page<>(dto.getPage(), dto.getPageSize()), wrapper);
+        userPage.getRecords().forEach(v->{
+            if(DelFlagEnum.DEL_FLAG_FALSE.getCode().equals(v.getDelFalg())){
+                v.setDelFalg(DelFlagEnum.DEL_FLAG_FALSE.getMsg());
+            }else {
+                v.setDelFalg(DelFlagEnum.DEL_FLAG_TRUE.getMsg());
+            }
+        });
         return userPage;
     }
 
@@ -146,10 +168,20 @@ public class InvitationServiceImpl extends ServiceImpl<InvitationMapper, Invitat
     @Override
     public void insertOrUpdate(InvitationDTO dto) {
         Invitation invitation = new Invitation();
+
+        if(StringUtils.isBlank(dto.getId())){
+            dto.setId(UuidUtil.get32UUID());
+        }
+
         BeanUtils.copyProperties(dto, invitation);
         if(StringUtils.isNotBlank(dto.getId())){
             invitation.setDelFalg(DelFlagEnum.DEL_FLAG_FALSE.getCode());
         }
+        invitation.setOperateDate(new Date());
+        invitation.setCreateDate(new Date());
+        invitation.setType("每日精选");
+        invitation.setLikeNum(0);
+        invitation.setReadNum(0);
         this.saveOrUpdate(invitation);
     }
 }

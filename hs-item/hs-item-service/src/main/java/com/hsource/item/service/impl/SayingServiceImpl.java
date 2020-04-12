@@ -46,6 +46,13 @@ public class SayingServiceImpl extends ServiceImpl<SayingMapper, Saying> impleme
             wrapper.like("content", dto.getContent());
         }
         Page<Saying> page = this.page(new Page<>(dto.getPage(), dto.getPageSize()), wrapper);
+        page.getRecords().forEach(v->{
+            if(DelFlagEnum.DEL_FLAG_FALSE.getCode().equals(v.getDelFalg())){
+                v.setDelFalg(DelFlagEnum.DEL_FLAG_FALSE.getMsg());
+            }else {
+                v.setDelFalg(DelFlagEnum.DEL_FLAG_TRUE.getMsg());
+            }
+        });
         return page;
     }
 

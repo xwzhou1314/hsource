@@ -61,10 +61,7 @@ public class InvitationController {
     }
 
     @ApiOperation(value = "获取全部帖子")
-    @PostMapping("/selectList")
-    @RequestMapping(value = "/index", method = RequestMethod.POST)
-    @Cached(expire = 60, cacheType = CacheType.REMOTE)
-    @CacheRefresh(refresh = 300, stopRefreshAfterLastAccess = 3600, timeUnit = TimeUnit.SECONDS)
+    @RequestMapping(value = "/selectList", method = RequestMethod.POST)
     public ResponseEntity<List<Invitation>> selectList(@ApiParam(value = "回复互动数据")@Valid @RequestBody InvitationSearchDTO dto){
         return ResponseEntity.ok(invitationService.selectListByDto(dto));
     }

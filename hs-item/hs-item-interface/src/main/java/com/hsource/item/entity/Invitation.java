@@ -51,7 +51,7 @@ public class Invitation extends BaseEntity {
      * 喜欢数
      */
     @TableField("like_num")
-    private long likeNum;
+    private Integer likeNum;
 
     /**
      * 内容
