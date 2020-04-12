@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -63,6 +64,7 @@ public class InvitationServiceImpl extends ServiceImpl<InvitationMapper, Invitat
      */
     @Override
     public Invitation selectInvitationById(String id) {
+
         // 获取帖子
         Invitation invitation = this.getById(id);
         if(null == invitation){
@@ -71,7 +73,7 @@ public class InvitationServiceImpl extends ServiceImpl<InvitationMapper, Invitat
         // 获取评论
         invitation.setReplies(replyService.selectReplyByInvitationId(id));
         invitation.setReadNum(invitation.getReadNum() + 1);
-
+        invitation.setLikeNum((Integer) redisTemplate.opsForHash().get(RedisConstant.LIKE_NUMBER_INVITATION, id));
         this.updateById(invitation);
         return invitation;
     }
@@ -126,6 +128,9 @@ public class InvitationServiceImpl extends ServiceImpl<InvitationMapper, Invitat
     }
     @Override
     public Page<Invitation> searchListPage(InvitationPageDTO dto) {
+
+        Map<Object, Object> entries = redisTemplate.opsForHash().entries(RedisConstant.LIKE_NUMBER_INVITATION);
+
         QueryWrapper<Invitation> wrapper = new QueryWrapper<>();
         if(null != dto && StringUtils.isNotBlank(dto.getTitle())){
             wrapper.like("title", dto.getTitle());
@@ -137,6 +142,7 @@ public class InvitationServiceImpl extends ServiceImpl<InvitationMapper, Invitat
             }else {
                 v.setDelFalg(DelFlagEnum.DEL_FLAG_TRUE.getMsg());
             }
+            v.setLikeNum((Integer) entries.get(v.getId()));
         });
         return userPage;
     }
