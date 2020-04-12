@@ -16,7 +16,7 @@ spring:
   application:
     name: item-service
   datasource:
-    url: jdbc:mysql://192.168.135.123:3307/hs?useUnicode=yes&characterEncoding=UTF8&useSSL=false
+    url: jdbc:mysql://101.201.181.61:3307/hs?useUnicode=yes&characterEncoding=UTF8&useSSL=false
     username: root
     password: zxw123
   rabbitmq:
@@ -39,7 +39,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:10086/eureka
+      defaultZone: http://101.201.181.61:10086/eureka
   instance:
     prefer-ip-address: true
     ip-address: 127.0.0.1
@@ -48,7 +48,7 @@ xxl:
     enabled: true
     admin:
       ### 调度中心部署跟地址 [选填]：如调度中心集群部署存在多个地址则用逗号分隔。执行器将会使用该地址进行"执行器心跳注册"和"任务结果回调"；为空则关闭自动注册；
-      addresses: http://192.168.135.123:17010/xxl-job-admin
+      addresses: http://101.201.181.61:17010/xxl-job-admin
     executor:
       appname: hsource-item
 
